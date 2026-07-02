@@ -1,0 +1,2 @@
+frontend/**/*.html linguist-vendored
+frontend/**/*.scss linguist-vendored
