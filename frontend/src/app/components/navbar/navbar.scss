@@ -1,0 +1,51 @@
+.navbar {
+    font-family: 'Google Sans', sans-serif;
+    display: flex;
+    margin-left: 20px;
+    margin-right: 25px;
+    align-items: center;
+
+    p {
+        width: 50%;
+        font-size: 30px;
+        font-weight: 600;
+        margin: 15px;
+    }
+
+    ul {
+        width: 50%;
+        display: flex;
+        list-style: none;
+        justify-content: end;
+        gap: 20px;
+
+        button {
+            background: #a8c7fa;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 14px;
+            color: white;
+            width: 120px;
+            height: 30px;
+            border: none;
+            border-radius: 24px;
+            cursor: pointer;
+
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+
+            &:hover {
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0);
+                transform: translateY(0px);
+            }
+
+            &.btn-ativo {
+                background-color: #1a73e8;
+            }
+        }
+    }
+}

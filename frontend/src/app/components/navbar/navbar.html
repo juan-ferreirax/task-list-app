@@ -1,0 +1,15 @@
+<nav class="navbar">
+    <p>Task List App</p>
+    <ul>
+        @for (item of navbarItens; track item.path) {
+            <li>
+                <button
+                    type="button"
+                    [routerLink]="item.path"
+                    routerLinkActive="btn-ativo"
+                    [routerLinkActiveOptions]="{exact: true}"
+                >{{ item.label }}</button>
+            </li>
+        }
+    </ul>
+</nav>
