@@ -40,7 +40,13 @@ pip install -r requirements.txt
 # 3. Configure as variáveis de ambiente
 # Faça uma cópia do arquivo .env.example e renomeie para .env
 cp .env.example .env
-# Preencha com as credenciais do seu banco de dados MySQL
+
+# O Django exige uma SECRET_KEY para segurança (criptografia, sessões e tokens).
+# Para gerar uma chave segura e aleatória, execute no terminal:
+python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+# Copie a string gerada pelo comando e cole no arquivo .env (ex: SECRET_KEY=sua_chave).
+# Preencha também as credenciais do seu banco de dados MySQL no mesmo arquivo.
 
 # 4. Execute as migrações do banco de dados
 python manage.py migrate
