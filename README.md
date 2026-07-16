@@ -26,15 +26,14 @@ Abra o terminal na pasta `backend/` e siga os passos abaixo:
 
 ```bash
 # 1. Crie e ative um ambiente virtual
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# No Windows use: venv\Scripts activate
+python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# No Windows use: .venv\Scripts\activate
 
 # 2. Instale as dependências
-# ATENÇÃO: Em ambientes ARM (como Termux ou Raspberry Pi), a instalação do mysqlclient pode falhar
+# ATENÇÃO: Em ambientes ARM (como Termux), a instalação do mysqlclient pode falhar
 # por falta de dependências de compilação (libmysqlclient-dev).
-# Nesses casos, é necessário remover o mysqlclient do requirements.txt e usar apenas o PyMySQL,
-# ou rodar o comando ignorando erros de compilação.
+# Nesse caso, é necessário remover o mysqlclient do requirements.txt e usar apenas o PyMySQL.
 # Em ambientes Debian e derivados a dependência específica pode ser instalada com sudo apt install libmysqlclient-dev.
 pip install -r requirements.txt
 
