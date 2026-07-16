@@ -1,0 +1,40 @@
+@if (isOpen) {
+    <div class="modal-backdrop" (click)="fecharModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <h2>{{ newTask.id ? 'Editar Tarefa' : 'Nova Tarefa' }}</h2>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="text" id="title-field" class="material-field" placeholder=" " [(ngModel)]="newTask.title" />
+                    <label for="title-field" class="floating-label">Título da tarefa</label>
+                </div>
+
+                <div class="input-container">
+                    <textarea id="desc-modal-field" class="material-field" placeholder=" " rows="3" [(ngModel)]="newTask.description"></textarea>
+                    <label for="desc-modal-field" class="floating-label">Descrição</label>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-container">
+                        <input type="text" id="cat-field" class="material-field" placeholder=" " [(ngModel)]="newTask.category" />
+                        <label for="cat-field" class="floating-label">Categoria</label>
+                    </div>
+
+                    <div class="input-container">
+                        <select id="status-field" class="material-field select-field" [(ngModel)]="newTask.status">
+                            <option value="pendente">Pendente</option>
+                            <option value="em andamento">Em andamento</option>
+                            <option value="concluída">Concluída</option>
+                        </select>
+                        <label for="status-field" class="floating-label active">Status</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancelar" (click)="fecharModal()">Cancelar</button>
+                <button class="btn-salvar" (click)="salvarTarefa()">Salvar</button>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,23 @@
+<div class="task-container">
+    <!-- Renderização dinâmica dos cards -->
+    @if (tasks.length > 0) {
+        @for (task of tasks; track $index) {
+            <!-- O pai passa cada tarefa para o filho via Property Binding [task],
+            no caso é criado uma conexão entre a variável 'task' do pai ao @Input do filho.
+            Assim o filho monta o card com as informações vindas do pai e o pai renderiza. -->
+            <app-task-item [task]="task" (delete)="removerTarefa($event)" (edit)="abrirModal($event)"></app-task-item>
+        }
+    } @else {
+        <div>
+            <p>Não há tarefas com esse status para serem mostradas!</p>
+        </div>
+    }
+
+    <button class="fab-button" (click)="abrirModal()">+</button>
+    <app-task-modal
+        [isOpen]="isModalOpen"
+        [taskToEdit]="taskEmEdicao"
+        (close)="fecharModal()"
+        (save)="salvarTarefaModal($event)">
+    </app-task-modal>
+</div>

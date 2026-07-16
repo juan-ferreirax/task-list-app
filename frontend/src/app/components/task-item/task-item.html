@@ -1,0 +1,37 @@
+<div class="task-card">
+    <div class="task-info">
+        <p class="title">{{ task.title }}</p>
+        <div class="infos">
+            Categoria:<button>{{ task.category }}</button>
+            Status:
+            <button [ngClass]="{
+                'status-pendente': task.status === 'pendente',
+                'status-andamento': task.status === 'em andamento',
+                'status-concluida': task.status === 'concluída'
+            }">
+                {{ task.status }}
+            </button>
+        </div>
+    </div>
+    <div class="input-container">
+        <textarea
+            id="desc-field"
+            name="description"
+            class="description-field"
+            placeholder=" "
+            rows="1"
+            [value]="task.description"
+            #textArea
+            (input)="recalcularAltura(textArea)"
+        ></textarea>
+
+        <label for="desc-field" class="floating-label">Descrição</label>
+    </div>
+    <div class="task-actions">
+        <p class="date">Editado em {{ task.edited_at | date:'dd/MM/yyyy' }} às {{ task.edited_at | date:'HH:mm' }}</p>
+        <div class="action-buttons">
+            <button id="btn-excluir" (click)="onDelete()">Excluir</button>
+            <button id="btn-editar" (click)="onEdit()">Editar</button>
+        </div>
+    </div>
+</div>
