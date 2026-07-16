@@ -16,6 +16,49 @@ Um aplicativo fullstack para gerenciamento de tarefas. O projeto permite criar, 
 * Django REST Framework
 * Banco de Dados: MySQL / configurável via `.env`
 
+## Como Executar o Projeto
+
+Para rodar a aplicação localmente, é necessário dois terminais abertos: um para a API e outro para o frontend.
+
+Para o Backend (API):
+Abra o terminal na pasta backend/ e siga os passos abaixo:
+```bash
+# 1. Crie e ative um ambiente virtual
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# No Windows use: venv\Scripts\activate
+
+# 2. Instale as dependências
+pip install -r requirements.txt
+
+# 3. Configure as variáveis de ambiente
+# Faça uma cópia do arquivo .env.example e renomeie para .env
+# Preencha com as credenciais do seu banco de dados MySQL
+
+# 4. Execute as migrações do banco de dados
+python manage.py migrate
+
+# 5. Inicie o servidor
+python manage.py runserver
+```
+A API estará acessível no endereço: http://127.0.0.1:8000/
+
+Abra um novo terminal na pasta frontend/ e siga os passos abaixo:
+```bash
+# 1. Instale as dependências do projeto
+npm install
+
+# 2. Configure a conexão com a API
+# Dentro da pasta src/app/environments/, faça uma cópia do arquivo
+# environment.example.ts e renomeie para environment.ts
+# Certifique-se de que a apiUrl esteja apontando para o backend
+
+# 3. Inicie a aplicação Angular
+ng serve
+```
+
+A interface do usuário estará acessível no endereço: http://localhost:4200/
+
 ## 📂 Estrutura do Projeto
 
 ```text
