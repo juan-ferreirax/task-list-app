@@ -2,7 +2,7 @@
 
 Um aplicativo fullstack para gerenciamento de tarefas. O projeto permite criar, editar, excluir e listar tarefas, organizando-as por categorias e filtrando pelo status (Pendentes, Em andamento e Concluídas).
 
-## 💻 Tecnologias Usadas
+## Tecnologias Usadas
 
 **Frontend:**
 * Angular
@@ -20,19 +20,27 @@ Um aplicativo fullstack para gerenciamento de tarefas. O projeto permite criar, 
 
 Para rodar a aplicação localmente, é necessário dois terminais abertos: um para a API e outro para o frontend.
 
-Para o Backend (API):
-Abra o terminal na pasta backend/ e siga os passos abaixo:
+### 1. Backend (API)
+
+Abra o terminal na pasta `backend/` e siga os passos abaixo:
+
 ```bash
 # 1. Crie e ative um ambiente virtual
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
-# No Windows use: venv\Scripts\activate
+# No Windows use: venv\Scripts activate
 
 # 2. Instale as dependências
+# ATENÇÃO: Em ambientes ARM (como Termux ou Raspberry Pi), a instalação do mysqlclient pode falhar
+# por falta de dependências de compilação (libmysqlclient-dev).
+# Nesses casos, é necessário remover o mysqlclient do requirements.txt e usar apenas o PyMySQL,
+# ou rodar o comando ignorando erros de compilação.
+# Em ambientes Debian e derivados a dependência específica pode ser instalada com sudo apt install libmysqlclient-dev.
 pip install -r requirements.txt
 
 # 3. Configure as variáveis de ambiente
 # Faça uma cópia do arquivo .env.example e renomeie para .env
+cp .env.example .env
 # Preencha com as credenciais do seu banco de dados MySQL
 
 # 4. Execute as migrações do banco de dados
@@ -41,9 +49,12 @@ python manage.py migrate
 # 5. Inicie o servidor
 python manage.py runserver
 ```
-A API estará acessível no endereço: http://127.0.0.1:8000/
+A API estará acessível no endereço: **http://127.0.0.1:8000/**
 
-Abra um novo terminal na pasta frontend/ e siga os passos abaixo:
+### 2. Frontend
+
+Abra um novo terminal na pasta `frontend/` e siga os passos abaixo:
+
 ```bash
 # 1. Instale as dependências do projeto
 npm install
@@ -51,13 +62,13 @@ npm install
 # 2. Configure a conexão com a API
 # Dentro da pasta src/app/environments/, faça uma cópia do arquivo
 # environment.example.ts e renomeie para environment.ts
+cp src/app/environments/environment.example.ts src/app/environments/environment.ts
 # Certifique-se de que a apiUrl esteja apontando para o backend
 
 # 3. Inicie a aplicação Angular
 ng serve
 ```
-
-A interface do usuário estará acessível no endereço: http://localhost:4200/
+A interface do usuário estará acessível no endereço: **http://localhost:4200/**
 
 ## 📂 Estrutura do Projeto
 
@@ -91,3 +102,4 @@ task-list-app/
     ├── tsconfig.app.json    # Configuração do compilador TypeScript para a aplicação
     ├── tsconfig.json        # Configuração base do TypeScript
     └── tsconfig.spec.json   # Configuração do TypeScript para testes
+```

@@ -1,9 +1,16 @@
-asgiref==3.11.1
+# Framework Principal
 Django==6.0.6
-django-cors-headers==4.9.0
 djangorestframework==3.17.1
-mysqlclient==2.2.8
-PyMySQL==1.2.0
+
+# Integração e Configuração
+django-cors-headers==4.9.0
 python-dotenv==1.2.2
+
+# Dependências do Django
+asgiref==3.11.1
 sqlparse==0.5.5
 tzdata==2026.2
+
+# Drivers de Banco de Dados (MySQL)
+mysqlclient==2.2.8
+PyMySQL==1.2.0
