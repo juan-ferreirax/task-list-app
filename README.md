@@ -28,7 +28,7 @@ Abra o terminal na pasta `backend/` e siga os passos abaixo:
 # 1. Crie e ative um ambiente virtual
 python -m venv .venv
 source .venv/bin/activate  # Linux/macOS
-# No Windows use: .venv\Scripts\activate
+# No Windows: .venv\Scripts\activate
 
 # 2. Instale as dependências
 # ATENÇÃO: Em ambientes ARM (como Termux), a instalação do mysqlclient pode falhar
@@ -68,6 +68,8 @@ npm install
 # Dentro da pasta src/app/environments/, faça uma cópia do arquivo
 # environment.example.ts e renomeie para environment.ts
 cp src/app/environments/environment.example.ts src/app/environments/environment.ts
+# No Windows: copy src\app\environments\environment.example.ts src\app\environments\environment.ts
+
 # Certifique-se de que a apiUrl esteja apontando para o backend
 
 # 3. Inicie a aplicação Angular
@@ -75,7 +77,7 @@ ng serve
 ```
 A interface do usuário estará acessível no endereço: **http://localhost:4200/**
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 task-list-app/
