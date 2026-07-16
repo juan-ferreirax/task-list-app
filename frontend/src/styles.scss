@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Estilo Normal */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/fonts/Google_Sans/GoogleSans-VariableFont_GRAD,opsz,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+/* Estilo Itálico */
+@font-face {
+    font-family: 'Google Sans';
+    src: url('/fonts/Google_Sans/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf')
+    format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+body,
+html {
+    border: 0px;
+    margin: 0px;
+}
