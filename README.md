@@ -40,9 +40,9 @@ Existem duas formas de rodar o projeto: via **Docker** (recomendado, sobe tudo c
 ```bash
    cp .env.example .env
 ```
-   O Django exige uma `SECRET_KEY` para segurança (criptografia, sessões e tokens). Para gerar uma chave segura e aleatória, execute:
+   O Django exige uma `SECRET_KEY` para segurança (criptografia, sessões e tokens). Para gerar uma chave segura e aleatória sem precisar instalar nada localmente, execute:
 ```bash
-   python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+   python3 -c "import secrets; print(secrets.token_urlsafe(50))"
 ```
    Copie a string gerada e cole no `.env` (ex: `SECRET_KEY=sua_chave`). Preencha também as demais variáveis (credenciais do MySQL, `ALLOWED_HOSTS`, etc).
 
