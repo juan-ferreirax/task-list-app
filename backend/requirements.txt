@@ -14,3 +14,6 @@ tzdata==2026.2
 # Drivers de Banco de Dados (MySQL)
 mysqlclient==2.2.8
 PyMySQL==1.2.0
+
+# Servir arquivos estáticos em produção (sem depender do runserver)
+whitenoise==6.11.0
