@@ -16,11 +16,60 @@ Um aplicativo fullstack para gerenciamento de tarefas. O projeto permite criar, 
 * Django REST Framework
 * Banco de Dados: MySQL / configurável via `.env`
 
+**Infraestrutura:**
+* Docker / Docker Compose
+
 ## Como Executar o Projeto
 
-Para rodar a aplicação localmente, é necessário dois terminais abertos: um para a API e outro para o frontend.
+Existem duas formas de rodar o projeto: via **Docker** (recomendado, sobe tudo com um único comando) ou **manualmente** (rodando backend e frontend em terminais separados).
 
-### 1. Backend (API)
+### Opção 1: Via Docker (recomendado)
+
+#### Pré-requisitos
+- Docker e Docker Compose instalados
+
+#### Passos
+
+1. Clone o repositório:
+```bash
+   git clone <url-do-repositorio>
+   cd task-list-app
+```
+
+2. Crie o arquivo `.env` na raiz do projeto, baseado no `.env.example`:
+```bash
+   cp .env.example .env
+```
+   O Django exige uma `SECRET_KEY` para segurança (criptografia, sessões e tokens). Para gerar uma chave segura e aleatória, execute:
+```bash
+   python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+   Copie a string gerada e cole no `.env` (ex: `SECRET_KEY=sua_chave`). Preencha também as demais variáveis (credenciais do MySQL, `ALLOWED_HOSTS`, etc).
+
+3. Suba os containers:
+```bash
+   docker compose up --build
+```
+
+4. Acesse a aplicação:
+   - Frontend: **http://localhost:4200**
+   - API: **http://localhost:8000/api/tasks/**
+
+Para derrubar os containers:
+```bash
+docker compose down
+```
+
+Para derrubar os containers **e apagar os dados do banco**:
+```bash
+docker compose down -v
+```
+
+### Opção 2: Manualmente
+
+Para rodar a aplicação localmente sem Docker, é necessário dois terminais abertos: um para a API e outro para o frontend.
+
+#### 1. Backend (API)
 
 Abra o terminal na pasta `backend/` e siga os passos abaixo:
 
@@ -38,8 +87,9 @@ source .venv/bin/activate  # Linux/macOS
 pip install -r requirements.txt
 
 # 3. Configure as variáveis de ambiente
-# Faça uma cópia do arquivo .env.example e renomeie para .env
-cp .env.example .env
+# Faça uma cópia do arquivo .env.example (na raiz do projeto) e renomeie para .env,
+# também na raiz do projeto
+cp ../.env.example ../.env
 
 # O Django exige uma SECRET_KEY para segurança (criptografia, sessões e tokens).
 # Para gerar uma chave segura e aleatória, execute no terminal:
@@ -56,7 +106,7 @@ python manage.py runserver
 ```
 A API estará acessível no endereço: **http://127.0.0.1:8000/**
 
-### 2. Frontend
+#### 2. Frontend
 
 Abra um novo terminal na pasta `frontend/` e siga os passos abaixo:
 
@@ -65,10 +115,10 @@ Abra um novo terminal na pasta `frontend/` e siga os passos abaixo:
 npm install
 
 # 2. Configure a conexão com a API
-# Dentro da pasta src/app/environments/, faça uma cópia do arquivo
+# Dentro da pasta src/environments/, faça uma cópia do arquivo
 # environment.example.ts e renomeie para environment.ts
-cp src/app/environments/environment.example.ts src/app/environments/environment.ts
-# No Windows: copy src\app\environments\environment.example.ts src\app\environments\environment.ts
+cp src/environments/environment.example.ts src/environments/environment.ts
+# No Windows: copy src\environments\environment.example.ts src\environments\environment.ts
 
 # Certifique-se de que a apiUrl esteja apontando para o backend
 
@@ -81,32 +131,96 @@ A interface do usuário estará acessível no endereço: **http://localhost:4200
 
 ```text
 task-list-app/
-├── backend/                 # RESTful API
-│   ├── api/                 # Configurações globais do projeto Django
-│   ├── tasks/               # App principal (models, views, serializers, urls)
-│   ├── .env.example         # Exemplo de variáveis de ambiente
-|   ├── .gitignore           # Arquivos e pastas ignorados pelo Git no backend
-│   ├── manage.py            # Script de gerenciamento do Django
-│   └── requirements.txt     # Dependências do Python
+├── backend/
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── asgi.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
+│   ├── tasks/
+│   │   ├── migrations/
+│   │   │   ├── __init__.py
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── 0002_alter_task_table.py
+│   │   │   ├── 0003_rename_creat_at_task_created_at.py
+│   │   │   ├── 0004_alter_task_category.py
+│   │   │   ├── 0005_remove_task_is_completed_task_status.py
+│   │   │   └── 0006_remove_task_created_at_task_edited_at.py
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   ├── Dockerfile
+│   ├── manage.py
+│   └── requirements.txt
 │
-└── frontend/                # Interface de Usuário (SPA)
-    ├── public/              # Arquivos estáticos e assets públicos (ex: favicon)
-    ├── src/
-    │   ├── app/
-    │   │   ├── components/  # Componentes (base-ui, navbar, task-item, task-list, task-modal)
-    │   │   ├── interfaces/  # Tipagens e modelos (task.ts)
-    │   │   └── services/    # Serviços de comunicação com a API REST (task.service.ts)
-    │   ├── environments/    # Configurações de ambiente (URLs da API)
-    │   ├── index.html       # Arquivo HTML principal
-    │   ├── main.ts          # Ponto de entrada do Angular
-    │   └── styles.scss      # Estilos globais e importação de fontes
-    ├── .editorconfig        # Configurações padronizadas para o editor de código
-    ├── .gitignore           # Arquivos e pastas ignorados pelo Git no frontend
-    ├── .prettierrc          # Configurações de formatação do Prettier
-    ├── angular.json         # Configuração do Angular Workspace
-    ├── package.json         # Dependências do projeto Node.js
-    ├── package-lock.json    # Versões exatas da árvore de dependências
-    ├── tsconfig.app.json    # Configuração do compilador TypeScript para a aplicação
-    ├── tsconfig.json        # Configuração base do TypeScript
-    └── tsconfig.spec.json   # Configuração do TypeScript para testes
+├── frontend/
+│   ├── public/
+│   │   ├── fonts/
+│   │   │   └── Google_Sans/
+│   │   │       ├── GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf
+│   │   │       ├── GoogleSans-VariableFont_GRAD,opsz,wght.ttf
+│   │   │       ├── OFL.txt
+│   │   │       └── README.txt
+│   │   └── favicon.ico
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── components/
+│   │   │   │   ├── base-ui/
+│   │   │   │   │   ├── base-ui.html
+│   │   │   │   │   ├── base-ui.scss
+│   │   │   │   │   └── base-ui.ts
+│   │   │   │   ├── navbar/
+│   │   │   │   │   ├── navbar.html
+│   │   │   │   │   ├── navbar.scss
+│   │   │   │   │   └── navbar.ts
+│   │   │   │   ├── task-item/
+│   │   │   │   │   ├── task-item.html
+│   │   │   │   │   ├── task-item.scss
+│   │   │   │   │   └── task-item.ts
+│   │   │   │   ├── task-list/
+│   │   │   │   │   ├── task-list.html
+│   │   │   │   │   ├── task-list.scss
+│   │   │   │   │   └── task-list.ts
+│   │   │   │   └── task-modal/
+│   │   │   │       ├── task-modal.html
+│   │   │   │       ├── task-modal.scss
+│   │   │   │       └── task-modal.ts
+│   │   │   ├── interfaces/
+│   │   │   │   └── task.ts
+│   │   │   ├── services/
+│   │   │   │   └── task.service.ts
+│   │   │   ├── app.config.ts
+│   │   │   ├── app.html
+│   │   │   ├── app.routes.ts
+│   │   │   ├── app.scss
+│   │   │   ├── app.spec.ts
+│   │   │   └── app.ts
+│   │   ├── environments/
+│   │   │   └── environment.example.ts
+│   │   ├── index.html
+│   │   ├── main.ts
+│   │   └── styles.scss
+│   ├── .editorconfig
+│   ├── .prettierrc
+│   ├── angular.json
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── README.md
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   └── tsconfig.spec.json
+│
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── LICENSE
+└── README.md
 ```
