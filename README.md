@@ -46,12 +46,18 @@ Existem duas formas de rodar o projeto: via **Docker** (recomendado, sobe tudo c
 ```
    Copie a string gerada e cole no `.env` (ex: `SECRET_KEY=sua_chave`). Preencha também as demais variáveis (credenciais do MySQL, `ALLOWED_HOSTS`, etc).
 
-3. Suba os containers:
+3. Crie o arquivo `environment.ts` do frontend, baseado no `environment.example.ts`:
+```bash
+   cp frontend/src/environments/environment.example.ts frontend/src/environments/environment.ts
+```
+   Esse arquivo é necessário mesmo rodando via Docker, pois o build do Angular é feito durante a criação da imagem e precisa do arquivo já existir nesse momento. Deixe a `apiUrl` apontando para `http://localhost:8000/api/tasks/` (a porta publicada pelo container do backend no seu host).
+
+4. Suba os containers:
 ```bash
    docker compose up --build
 ```
 
-4. Acesse a aplicação:
+5. Acesse a aplicação:
    - Frontend: **http://localhost:4200**
    - API: **http://localhost:8000/api/tasks/**
 
