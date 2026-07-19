@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Task } from '../interfaces/task';
+
+declare global {
+  interface Window {
+    __env: {
+      apiUrl: string;
+    };
+  }
+}
 
 // 1º Singleton, cria uma instância desse serviço e disponibiliza para a aplicação inteira
 @Injectable({
@@ -10,7 +17,7 @@ import { Task } from '../interfaces/task';
 })
 export class TaskService {
     // 2º Define a conexão com API REST
-    private apiUrl = environment.apiUrl;
+    private apiUrl = window.__env.apiUrl;
 
     // 3º Injeta o HttpClient para requisições
     constructor(private http: HttpClient) {}
