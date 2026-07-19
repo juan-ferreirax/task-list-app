@@ -13,6 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 COPY . .
 
+RUN chmod +x start.sh
+
 EXPOSE 8000
 
-CMD ["gunicorn", "api.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["./start.sh"]
