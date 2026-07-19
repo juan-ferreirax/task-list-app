@@ -26,10 +26,6 @@ frontend/testem.log
 frontend/typings
 frontend/__screenshots__/
 
-# Environments do frontend (mantém só o exemplo)
-frontend/src/environments/*
-!frontend/src/environments/environment.example.ts
-
 # ===== Comum a ambos =====
 
 # Variáveis de ambiente (agora na raiz)
