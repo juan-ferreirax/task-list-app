@@ -18,10 +18,9 @@ Um aplicativo fullstack para gerenciamento de tarefas. O projeto permite criar, 
 
 **Infraestrutura:**
 * Docker / Docker Compose
+* GitHub Actions (CI/CD, build e publicação das imagens no Docker Hub)
 
 ## Como Executar o Projeto
-
-Existem duas formas de rodar o projeto: via **Docker** (recomendado, sobe tudo com um único comando) ou **manualmente** (rodando backend e frontend em terminais separados).
 
 ### Opção 1: Via Docker (recomendado)
 
@@ -46,18 +45,12 @@ Existem duas formas de rodar o projeto: via **Docker** (recomendado, sobe tudo c
 ```
    Copie a string gerada e cole no `.env` (ex: `SECRET_KEY=sua_chave`). Preencha também as demais variáveis (credenciais do MySQL, `ALLOWED_HOSTS`, etc).
 
-3. Crie o arquivo `environment.ts` do frontend, baseado no `environment.example.ts`:
-```bash
-   cp frontend/src/environments/environment.example.ts frontend/src/environments/environment.ts
-```
-   Esse arquivo é necessário mesmo rodando via Docker, pois o build do Angular é feito durante a criação da imagem e precisa do arquivo já existir nesse momento. Deixe a `apiUrl` apontando para `http://localhost:8000/api/tasks/` (a porta publicada pelo container do backend no seu host).
-
-4. Suba os containers:
+3. Suba os containers:
 ```bash
    docker compose up --build
 ```
 
-5. Acesse a aplicação:
+4. Acesse a aplicação:
    - Frontend: **http://localhost:4200**
    - API: **http://localhost:8000/api/tasks/**
 
@@ -121,12 +114,18 @@ Abra um novo terminal na pasta `frontend/` e siga os passos abaixo:
 npm install
 
 # 2. Configure a conexão com a API
-# Dentro da pasta src/environments/, faça uma cópia do arquivo
-# environment.example.ts e renomeie para environment.ts
-cp src/environments/environment.example.ts src/environments/environment.ts
-# No Windows: copy src\environments\environment.example.ts src\environments\environment.ts
+# O arquivo public/env.js já existe no repositório, mas contém um placeholder
+# (__API_URL__) que normalmente é substituído automaticamente pelo Docker
+# quando o container do frontend inicia. Rodando sem Docker (via ng serve),
+# essa substituição não acontece, então edite o arquivo manualmente:
 
-# Certifique-se de que a apiUrl esteja apontando para o backend
+# frontend/public/env.js
+window.__env = {
+  apiUrl: "http://127.0.0.1:8000/api/tasks/"
+};
+
+# ATENÇÃO: não faça commit dessa edição. Antes de dar commit, reverta o
+# arquivo com: git checkout frontend/public/env.js
 
 # 3. Inicie a aplicação Angular
 ng serve
@@ -137,6 +136,9 @@ A interface do usuário estará acessível no endereço: **http://localhost:4200
 
 ```text
 task-list-app/
+├── .github/
+│   └── workflows/
+│       └── docker-publish.yml
 ├── backend/
 │   ├── api/
 │   │   ├── __init__.py
@@ -163,7 +165,8 @@ task-list-app/
 │   │   └── views.py
 │   ├── Dockerfile
 │   ├── manage.py
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── start.sh
 │
 ├── frontend/
 │   ├── public/
@@ -173,6 +176,7 @@ task-list-app/
 │   │   │       ├── GoogleSans-VariableFont_GRAD,opsz,wght.ttf
 │   │   │       ├── OFL.txt
 │   │   │       └── README.txt
+│   │   ├── env.js
 │   │   └── favicon.ico
 │   ├── src/
 │   │   ├── app/
@@ -207,8 +211,6 @@ task-list-app/
 │   │   │   ├── app.scss
 │   │   │   ├── app.spec.ts
 │   │   │   └── app.ts
-│   │   ├── environments/
-│   │   │   └── environment.example.ts
 │   │   ├── index.html
 │   │   ├── main.ts
 │   │   └── styles.scss
@@ -216,6 +218,7 @@ task-list-app/
 │   ├── .prettierrc
 │   ├── angular.json
 │   ├── Dockerfile
+│   ├── inject-env.sh
 │   ├── nginx.conf
 │   ├── package-lock.json
 │   ├── package.json
