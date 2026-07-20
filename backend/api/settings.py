@@ -147,10 +147,8 @@ STORAGES = {
 cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS')
 
 if cors_origins:
-    # Se existir a variável de ambiente (como existirá no Render), ele usa ela.
     CORS_ALLOWED_ORIGINS = cors_origins.split(',')
 else:
-    # Se não existir (na sua máquina local), ele continua permitindo o seu Angular local.
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:4200",
         "http://127.0.0.1:4200",
